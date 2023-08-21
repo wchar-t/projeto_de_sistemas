@@ -4,6 +4,10 @@
 
 **Descrição:**
 Desenvolver o GuiaTur Tocantins, um aplicativo inovador que oferece informações completas sobre pontos turísticos e atrações no estado do Tocantins. O app será acessível através de totems estrategicamente localizados em locais-chave, como shoppings, aeroportos e rodoviárias, permitindo que os turistas tenham acesso a um guia completo para explorar a região.
+O uso de uma tvbox se justifica por:
+- Baixo Consumo de Energia: elas geralmente consomem menos energia em comparação com computadores completos, o que é benéfico para a operação contínua dos totens, especialmente em locais públicos.
+- Acessibilidade Financeira: elas são de baixo custo e são uma opção econômica para execução de aplicativos, o que é especialmente importante considerando a natureza do projeto.
+- Controle de Acesso: elas podem ser configuradas para operar em modo quiosque, o que permite que o aplicativo GuiaTur Tocantins seja o único software acessível no dispositivo.
 
 ### Funcionalidades Principais:
 
