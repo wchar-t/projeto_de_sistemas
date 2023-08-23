@@ -59,20 +59,17 @@ O GuiaTur Tocantins é um aplicativo inovador que oferece informações completa
 - #### RNF03 - Tempo de Resposta
     - O aplicativo deve responder às requisições dos usuários em no máximo 2 segundos.
 
-- #### RNF04 - Disponibilidade
-    - O aplicativo deverá estar disponível para acesso 24/7, com no máximo 1% de tempo de inatividade mensal.
-
 ### Usabilidade e Interface
 
-- #### RNF05 - Interface Intuitiva
+- #### RNF04 - Interface Intuitiva
     - A interface do aplicativo deve ser intuitiva e fácil de usar, mesmo para usuários não familiarizados.
 
-- #### RNF06 - Design Responsivo
+- #### RNF05 - Design Responsivo
     - O aplicativo deve ser responsivo e se adaptar a diferentes tamanhos de tela.
 
 ### Performance e Escalabilidade
 
-- #### RNF07 - Escalabilidade
+- #### RNF06 - Escalabilidade
     - O aplicativo deve ser capaz de lidar com um aumento significativo no número de usuários simultâneos.
 
 
