@@ -15,8 +15,8 @@
    - Task: Montar protótipo da tela principal
    - Task: Montar protótipo da tela das localidades
 
-- User story: Popup de ponto turístico
-   - Task: Fazer popup de ponto turístico
+- User story: Definir o Popup de ponto turístico
+   - Task: Fazer o popup de ponto turístico
 
 - User Story: Registrar Usuário
     - Criar tela de registro com campos para nome, email e senha.
