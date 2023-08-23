@@ -1,7 +1,7 @@
 # GuiaTur Tocantins
 
 **Documentação do desenvolvimento:**
-  - [Documentação de requisitos]()
+  - [Documentação de requisitos](requirements.md)
   - [Relação de sprints e tasks (atualizada a cada sprint)](tasks.md)
 
 
