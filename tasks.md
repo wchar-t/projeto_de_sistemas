@@ -17,6 +17,8 @@
 
 - User story: Definir o Popup de ponto turístico
    - Task: Fazer o popup de ponto turístico
+   - Task: fazer card de apresentaçao de ponto
+   - Task: fazer seçao de compra
 
 - User Story: Registrar Usuário
     - Criar tela de registro com campos para nome, email e senha.
