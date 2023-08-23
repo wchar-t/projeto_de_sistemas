@@ -1,6 +1,9 @@
 # GuiaTur Tocantins
 
-### [Requisitos]()
+**Documentação do desenvolvimento:**
+  - [Documentação de requisitos]()
+  - [Relação de sprints e tasks (atualizada a cada sprint)](tasks.md)
+
 
 **Descrição:**
 Desenvolver o GuiaTur Tocantins, um aplicativo inovador que oferece informações completas sobre pontos turísticos e atrações no estado do Tocantins. O app será acessível através de totems estrategicamente localizados em locais-chave, como shoppings, aeroportos e rodoviárias, permitindo que os turistas tenham acesso a um guia completo para explorar a região.
