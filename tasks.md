@@ -1,6 +1,6 @@
-# Planejamento das Sprints
+# Sprints
 
-### Planejamento da Sprint 01 (21/08 - 04/09)
+### Sprint 01 (21/08 - 04/09)
 
 - RNF03: Definir o esqueleto do projeto
     - Task: Criar projeto
