@@ -1,6 +1,7 @@
 # GuiaTur Tocantins
 
 **Documentação do desenvolvimento:**
+  - [Quadro de atividades Kanban](https://trello.com/b/z1z1tB6q/guiatur-tocantins)
   - [Documentação de requisitos](requirements.md)
   - [Relação de sprints e tasks (atualizada a cada sprint)](tasks.md)
 
