@@ -49,10 +49,14 @@ export const request = async <Data extends Record<string, any>>(
 };
 
 export default class Api {
-  static session: Session | null = null;
+  private static session: Session | null = null;
 
   static setToken(token?: string) {
     window.localStorage.setItem('token', token ?? '');
+  }
+
+  static setSession(session: Session | null) {
+    this.session = session;
   }
 
   static async register(
@@ -67,5 +71,25 @@ export default class Api {
     });
   }
 
+  static async login(
+    username: string,
+    password: string,
+  ): Promise<RequestResponse<LoginRegisterSuccess>> {
+    return request<LoginRegisterSuccess>('/api/login', {
+      username, password,
+    });
+  }
+
   /* private routes */
+
+  static getSession(): Session | null {
+    return this.session;
+  }
+
+  static async getMe(): Promise<RequestResponse<{
+    session: Session,
+    jwt: string,
+  }>> {
+    return request<{session: Session, jwt: string}>('/api/@me');
+  }
 }
