@@ -9,6 +9,10 @@
     "eslint-plugin-react-hooks": "^4.6.0"
   },
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.4.1"
+    "@chakra-ui/react": "^2.8.0",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@typescript-eslint/eslint-plugin": "^6.4.1",
+    "framer-motion": "^10.16.2"
   }
 }

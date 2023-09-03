@@ -1,4 +1,6 @@
+import Session from '@/interfaces/shared/Session';
 import TotemSession from '../interfaces/shared/TotemSession';
+import LoginRegisterSuccess from '@/interfaces/client/LoginRegisterSuccess';
 
 /* eslint-disable no-undef */
 export interface SuccessfulResponse<Data extends Record<string, any>> {
@@ -47,10 +49,22 @@ export const request = async <Data extends Record<string, any>>(
 };
 
 export default class Api {
-  static session: TotemSession | null = null;
+  static session: Session | null = null;
 
   static setToken(token?: string) {
     window.localStorage.setItem('token', token ?? '');
+  }
+
+  static async register(
+    name: string,
+    lastName: string,
+    username: string,
+    email: string,
+    password: string,
+  ): Promise<RequestResponse<LoginRegisterSuccess>> {
+    return request<LoginRegisterSuccess>('/api/register', {
+      name, lastName, username, email, password,
+    });
   }
 
   /* private routes */

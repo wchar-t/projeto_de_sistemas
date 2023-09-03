@@ -1,0 +1,6 @@
+/* format: --{state?}-{text/bg/border/shadow}-{color?/font?}-{element}-{primary/secondary/tertiary/?} */
+/* format for colors: --{color}--{level} */
+
+:root {
+  --bg-color-primary: #0e0e10;
+}

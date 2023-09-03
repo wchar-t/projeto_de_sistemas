@@ -1,8 +1,8 @@
-import Session from './Session';
-
-export default interface TotemSession extends Session {
+export default interface TotemSession {
+  id: string,
   coords: {
     lat: number,
     long: number,
   },
+  createdAt: Date,
 }
