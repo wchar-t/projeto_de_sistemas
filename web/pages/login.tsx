@@ -6,7 +6,6 @@ import {
   Button,
   FormControl,
   FormLabel,
-  HStack,
   Input,
   Text,
   VStack,
@@ -16,20 +15,11 @@ import Api from '@/lib/api';
 
 export default function Register() {
   const [user, setUser] = useState('');
-  const [name, setName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [apiError, setApiError] = useState('');
 
   async function submit() {
-    const { error, result } = await Api.register(
-      name,
-      lastName,
-      user,
-      email,
-      password,
-    );
+    const { error, result } = await Api.login(user, password);
 
     if (error) {
       setApiError(error.message);
@@ -42,9 +32,9 @@ export default function Register() {
     <Page center>
       <VStack spacing={2.5} maxWidth={450} width="100%" alignItems="start">
         <div>
-          <Text fontSize="5xl">Registro</Text>
+          <Text fontSize="5xl">Login</Text>
           <Text color="#777">
-            Já tem uma conta? <Link href="/login">Fazer login</Link>
+            Não tem uma conta? <Link href="/register">Fazer registro</Link>
           </Text>
         </div>
 
@@ -55,38 +45,12 @@ export default function Register() {
           </Alert>
         ) : null}
 
-        <HStack>
-          <FormControl isRequired>
-            <FormLabel>Nome</FormLabel>
-            <Input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </FormControl>
-          <FormControl isRequired>
-            <FormLabel>Sobrenome</FormLabel>
-            <Input
-              type="text"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-            />
-          </FormControl>
-        </HStack>
         <FormControl isRequired>
           <FormLabel>Usuário</FormLabel>
           <Input
             type="text"
             value={user}
             onChange={(e) => setUser(e.target.value)}
-          />
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel>Email</FormLabel>
-          <Input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
           />
         </FormControl>
         <FormControl isRequired>
