@@ -12,8 +12,6 @@
 
 - RNF04: Definir design da aplicacao
    - Task: Estudar a interação do usuário via teclado (ATM)
-   - Task: Montar protótipo da tela principal
-   - Task: Montar protótipo da tela das localidades
 
 - RF05: Detalhar o ponto turistico
    - Task 01: fazer seçao de compra
@@ -28,9 +26,22 @@
 - RF02: Autenticar Usuário
     - Criar tela de login com campos para email e senha.
     - Implementar autenticação usando email e senha.
+
+
+### Sprint 02 (04/09 - 21/09)
+
+- RF10: Cadastrar Totem
+    - Criar método de registro para totens no sistema
  
-- RF10: Registrar Totem
-    - Fazer tela de registro de totem
+- RF11: Autorizar Totem
+    - Criar método de autenticação de totem por identificador único
+
+- RF05: Detalhar ponto turístico
+    - Task 04: Criar cadastro de localidade (nome, descrição e fotos)
+
+- RF08: Mostrar Lojas de artigos Regionais
+    - Task 01: Criar cadastro para lojas de artigos regionais (nome, endereço, categoria)
  
-- RF11: Autenticar Totem
-    - Fazer tela de autenticação de totem
+- RNF04: Definir design da aplicação
+    - Task: Montar protótipo da tela principal
+    - Task: Montar protótipo da tela das localidades
