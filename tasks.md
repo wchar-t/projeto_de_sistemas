@@ -16,9 +16,9 @@
    - Task: Montar protótipo da tela das localidades
 
 - RF05: Detalhar o ponto turistico
-   - Task: Fazer o popup de ponto turístico
-   - Task: fazer card de apresentaçao de ponto
-   - Task: fazer seçao de compra
+   - Task 01: fazer card de apresentaçao de ponto
+   - Task 02: fazer seçao de compra
+   - Task 03: Fazer o popup de ponto turístico
 
 - RF01: Registrar Usuário
     - Criar tela de registro com campos para nome, email e senha.
@@ -28,3 +28,9 @@
 - RF02: Autenticar Usuário
     - Criar tela de login com campos para email e senha.
     - Implementar autenticação usando email e senha.
+ 
+- RF10: Registrar Totem
+    - Fazer tela de registro de totem
+ 
+- RF11: Autenticar Totem
+    - Fazer tela de autenticação de totem
