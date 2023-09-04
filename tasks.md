@@ -14,10 +14,9 @@
    - Task: Estudar a interação do usuário via teclado (ATM)
 
 - RF05: Detalhar o ponto turistico
-   - Task 01: fazer seçao de compra
    - Task 02: fazer card de apresentaçao de ponto
-   - Task 03: Fazer o popup de ponto turístico
-
+   - Task 03: fazer seção de compra
+     
 - RF01: Registrar Usuário
     - Criar tela de registro com campos para nome, email e senha.
     - Implementar validação de campos obrigatórios no registro.
@@ -37,6 +36,7 @@
     - Criar método de autenticação de totem por identificador único
 
 - RF05: Detalhar ponto turístico
+    - Task 01: Fazer o popup de ponto turístico
     - Task 04: Criar cadastro de localidade (nome, descrição e fotos)
 
 - RF08: Mostrar Lojas de artigos Regionais
@@ -45,3 +45,4 @@
 - RNF04: Definir design da aplicação
     - Task: Montar protótipo da tela principal
     - Task: Montar protótipo da tela das localidades
+ 
