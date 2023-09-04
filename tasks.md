@@ -16,8 +16,8 @@
    - Task: Montar protótipo da tela das localidades
 
 - RF05: Detalhar o ponto turistico
-   - Task 01: fazer card de apresentaçao de ponto
-   - Task 02: fazer seçao de compra
+   - Task 01: fazer seçao de compra
+   - Task 02: fazer card de apresentaçao de ponto
    - Task 03: Fazer o popup de ponto turístico
 
 - RF01: Registrar Usuário
