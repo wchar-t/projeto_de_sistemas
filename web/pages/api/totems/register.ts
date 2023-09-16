@@ -35,6 +35,7 @@ async function handler(req: GuiaTurApiRequest, res: GuiaTurApiResponse) {
       key,
       description,
       userId: req.session!.id,
+      coords: [0.0, 0.0],
     },
   });
 

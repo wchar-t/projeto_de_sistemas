@@ -60,6 +60,7 @@ async function handler(req: GuiaTurApiRequest, res: GuiaTurApiResponse) {
 
   const session: Session = {
     id: doc.id,
+    type: 'user',
     name: doc.name,
     username: doc.username,
     email: doc.email,

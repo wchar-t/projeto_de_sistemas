@@ -60,6 +60,10 @@ export default class Api {
     this.session = session;
   }
 
+  static setTotemSession(token?: string) {
+    window.localStorage.setItem('totemToken', token ?? '');
+  }
+
   static async register(
     name: string,
     lastName: string,
@@ -79,6 +83,12 @@ export default class Api {
     return request<LoginRegisterSuccess>('/api/login', {
       username, password,
     });
+  }
+
+  static async loginTotem(
+    key: string,
+  ): Promise<RequestResponse<LoginRegisterSuccess>> {
+    return request<LoginRegisterSuccess>('/api/totem/login', { key });
   }
 
   /* private routes */
