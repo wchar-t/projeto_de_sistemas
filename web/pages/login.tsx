@@ -25,6 +25,7 @@ export default function Register() {
       setApiError(error.message);
     } else {
       Api.setToken(result.jwt);
+      window.location.href = '/';
     }
   }
 

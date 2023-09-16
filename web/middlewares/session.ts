@@ -2,14 +2,15 @@ import jsonwebtoken from 'jsonwebtoken';
 import { GuiaTurApiRequest } from '../interfaces/server/Request';
 import { GuiaTurApiResponse } from '../interfaces/server/Response';
 import Session from '../interfaces/shared/Session';
+import TotemSession from '@/interfaces/shared/TotemSession';
 
-export function decrypt(jwt: string | null): Session | boolean {
+export function decrypt(jwt: string | null): Session | TotemSession | boolean {
   if (!jwt) {
     return false;
   }
 
   try {
-    const token = jsonwebtoken.verify(jwt, process.env.JWT_TOKEN || '') as Session;
+    const token = jsonwebtoken.verify(jwt, process.env.JWT_TOKEN || '') as Session | TotemSession;
     return token;
   } catch (e) {
     return false;
@@ -30,7 +31,7 @@ export default function withSession(
       return res.status(401).json({ error: { code: 'not_authorized', message: 'Não autenticado' } });
     }
 
-    req.session = (session as Session);
+    req.session = (session as Session | TotemSession);
 
     return handler(req, res);
   };

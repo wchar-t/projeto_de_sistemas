@@ -1,6 +1,7 @@
 import Session from '@/interfaces/shared/Session';
 import TotemSession from '../interfaces/shared/TotemSession';
 import LoginRegisterSuccess from '@/interfaces/client/LoginRegisterSuccess';
+import Totem from '@/interfaces/client/Totem';
 
 /* eslint-disable no-undef */
 export interface SuccessfulResponse<Data extends Record<string, any>> {
@@ -91,5 +92,16 @@ export default class Api {
     jwt: string,
   }>> {
     return request<{session: Session, jwt: string}>('/api/@me');
+  }
+
+  static async registerTotem(
+    key: string,
+    description: string,
+  ): Promise<RequestResponse<{status: string}>> {
+    return request<{status: string}>('/api/totems/register', { key, description });
+  }
+
+  static async getTotems(): Promise<RequestResponse<{totems: Totem[]}>> {
+    return request<{totems: Totem[]}>('/api/totems');
   }
 }

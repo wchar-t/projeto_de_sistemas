@@ -11,3 +11,20 @@ body {
     'cv04', 'cv05', 'cv06', 'cv09', 'cv10';
   -moz-osx-font-smoothing: grayscale;
 }
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(50, 50, 50);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #161616;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

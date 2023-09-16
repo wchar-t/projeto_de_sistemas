@@ -8,6 +8,8 @@ import Api from '@/lib/api';
 
 const inter = Inter({ subsets: ['latin'] });
 
+/* eslint-disable react/jsx-props-no-spreading */
+
 export default function App({ Component, pageProps }: AppProps) {
   const [loaded, setLoaded] = useState(false);
 
