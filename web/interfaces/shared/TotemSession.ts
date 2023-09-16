@@ -1,12 +1,13 @@
 export default interface TotemSession {
   id: string,
+  userId: string,
   type: 'totem',
   key: string,
   description: string,
   coords: {
     lat: number,
-    long: number,
+    lng: number,
   },
-  lastActive: Date,
+  lastActive: Date | null,
   createdAt: Date,
 }
