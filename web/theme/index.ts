@@ -1,5 +1,7 @@
 import { extendTheme } from '@chakra-ui/react';
 import Input from './input';
+import Table from './table';
+import Modal from './modal';
 
 export default extendTheme({
   styles: {
@@ -16,5 +18,7 @@ export default extendTheme({
   },
   components: {
     Input,
+    Table,
+    Modal,
   },
 });
