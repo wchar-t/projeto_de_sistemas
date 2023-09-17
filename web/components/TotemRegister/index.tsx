@@ -33,12 +33,18 @@ export default function TotemRegisterModal({
   const [latLng, setLatLng] = useState({ lat: 0.0, lng: 0.0 });
 
   async function onSubmit() {
-    const { error } = await Api.registerTotem(key, description);
+    const { error } = await Api.registerTotem(
+      key,
+      description,
+      latLng.lat,
+      latLng.lng,
+    );
 
     if (error) {
       setApiError(error.message);
     } else {
       onClose();
+      window.location.reload();
     }
   }
 

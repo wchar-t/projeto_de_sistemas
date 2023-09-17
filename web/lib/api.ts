@@ -107,8 +107,10 @@ export default class Api {
   static async registerTotem(
     key: string,
     description: string,
+    lat: number,
+    lng: number,
   ): Promise<RequestResponse<{status: string}>> {
-    return request<{status: string}>('/api/totems/register', { key, description });
+    return request<{status: string}>('/api/totems/register', { key, description, lat, lng });
   }
 
   static async getTotems(): Promise<RequestResponse<{totems: Totem[]}>> {

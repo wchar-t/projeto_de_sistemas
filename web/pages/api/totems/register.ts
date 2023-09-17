@@ -7,12 +7,18 @@ import prisma from '@/schema/client';
 interface params {
   key: string,
   description: string,
+  lat: string,
+  lng: string,
 }
 
 async function handler(req: GuiaTurApiRequest, res: GuiaTurApiResponse) {
-  const { key, description }: params = req.body;
+  const { key, description, lat, lng }: params = req.body;
 
-  if (!key || !description) {
+  if (!key || !description || !lat || !lng) {
+    return res.status(400).json({ error: { code: 'invalid_data', message: 'Dados inválidos' } });
+  }
+
+  if (Number.isNaN(parseFloat(lat)) || Number.isNaN(parseFloat(lng))) {
     return res.status(400).json({ error: { code: 'invalid_data', message: 'Dados inválidos' } });
   }
 
@@ -35,7 +41,7 @@ async function handler(req: GuiaTurApiRequest, res: GuiaTurApiResponse) {
       key,
       description,
       userId: req.session!.id,
-      coords: [0.0, 0.0],
+      coords: [parseFloat(lat), parseFloat(lng)],
     },
   });
 
