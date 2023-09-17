@@ -16,6 +16,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import Api from '@/lib/api';
+import MapMarkable from '../MapMarkable';
 
 interface TotemRegisterModalOptions {
   isOpen: boolean;
@@ -29,6 +30,7 @@ export default function TotemRegisterModal({
   const [key, setKey] = useState('');
   const [description, setDescription] = useState('');
   const [apiError, setApiError] = useState('');
+  const [latLng, setLatLng] = useState({ lat: 0.0, lng: 0.0 });
 
   async function onSubmit() {
     const { error } = await Api.registerTotem(key, description);
@@ -59,7 +61,7 @@ export default function TotemRegisterModal({
               <Input
                 type="text"
                 value={key}
-                onChange={(e) => setKey(e.target.value)}
+                onChange={(e) => setKey(e.target.value.replace(/\D/g, ''))}
               />
             </FormControl>
             <FormControl isRequired>
@@ -70,6 +72,24 @@ export default function TotemRegisterModal({
                 onChange={(e) => setDescription(e.target.value)}
               />
             </FormControl>
+            <FormControl isRequired>
+              <FormLabel>Localização (clique no ponto)</FormLabel>
+            </FormControl>
+            <MapMarkable
+              onChange={(lat: number, lng: number) => {
+                setLatLng({ lat, lng });
+              }}
+            />
+            <HStack width="100%">
+              <FormControl isRequired>
+                <FormLabel>Latitude</FormLabel>
+                <Input type="text" value={latLng.lat} isDisabled />
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel>Longitude</FormLabel>
+                <Input type="text" value={latLng.lng} isDisabled />
+              </FormControl>
+            </HStack>
           </VStack>
           <HStack spacing={2.5} justifyContent="space-between">
             <button onClick={onClose} type="button">

@@ -80,7 +80,7 @@ export default function Totems() {
               </Thead>
               <Tbody>
                 {filteredTotems.map((e, i) => (
-                  <Tr>
+                  <Tr key={e.key}>
                     <Td isNumeric>{i}</Td>
                     <Td>{e.key}</Td>
                     <Td>{e.description}</Td>

@@ -10,9 +10,15 @@ export default function Home() {
   const mapsWrapperRef = createRef<HTMLDivElement>();
 
   useEffect(() => {
-    if (window.google && window.google.maps) {
-      setIsMapsLoaded(true);
+    function check() {
+      if (window.google && window.google.maps) {
+        setIsMapsLoaded(true);
+      } else {
+        setTimeout(check, 500);
+      }
     }
+
+    check();
   }, []);
 
   useEffect(() => {
@@ -24,6 +30,7 @@ export default function Home() {
     map.current = new window.google.maps.Map(mapsWrapperRef.current, {
       center: bounds.getCenter(),
       zoom: 0,
+      mapTypeId: 'terrain',
       restriction: {
         latLngBounds: bounds,
         strictBounds: false,
