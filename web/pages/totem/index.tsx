@@ -33,7 +33,7 @@ export default function Home() {
     (async () => {
       // reference: https://nominatim.openstreetmap.org/search.php?q=Tocantins,%20Região%20Norte,%20Brasil&polygon_geojson=1&format=jsonv2
       const data = await fetch(
-        'http://127.0.0.1:90/tocantins.geojson.json',
+        'http://127.0.0.1:90/static/tocantins.geojson.json',
       ).then((e) => e.json());
       const { geojson } = data[0];
 
