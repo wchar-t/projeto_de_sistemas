@@ -39,12 +39,18 @@ O GuiaTur Tocantins é um aplicativo inovador que oferece informações completa
 - #### RF09 - Permitir Exportação de Roteiros
     - Como um usuário, desejo exportar os roteiros montados em um formato de arquivo para referência offline.
 
+- #### RF10 - Permitir o cadastro de Totems
+    - Como um usuário, desejo poder cadastrar totems que exibam a aplicação.
+ 
+- #### RF11 - Permitir a autenticação de Totems
+    - Como um usuário, desejo poder autenticar um totems por meio de um código de acesso único.
+
 ### Acessibilidade e Idiomas
 
-- #### RF10 - Permitir Acessibilidade
+- #### RF12 - Permitir Acessibilidade
     - Como um usuário com necessidades especiais, desejo acessar o aplicativo com facilidade, ajustando opções de contraste e tamanho de fonte.
 
-- #### RF10 - Ter Suporte a Idiomas
+- #### RF13 - Ter Suporte a Idiomas
     - Como um turista internacional, desejo visualizar o aplicativo em meu idioma nativo.
 
 ## Requisitos Não Funcionais
