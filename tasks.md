@@ -29,20 +29,16 @@
 
 ### Sprint 02 (04/09 - 21/09)
 
-- RF10: Cadastrar Totem
+- [RF10: Cadastrar Totem](https://github.com/wchar-t/projeto_de_sistemas/pull/6)
     - Criar método de registro para totens no sistema (João Pedro Pereira)
  
-- RF11: Autorizar Totem
+- [RF11: Autorizar Totem](https://github.com/wchar-t/projeto_de_sistemas/pull/7)
     - Criar método de autenticação de totem por identificador único (João Pedro Pereira)
 
-- RF05: Detalhar ponto turístico
-    - Task 01: Fazer o popup de ponto turístico (Lucas José)
-    - Task 04: Criar cadastro de localidade (nome, descrição e fotos) (Emanuel Catão)
+- [RF10: Deletar Totem](https://github.com/wchar-t/projeto_de_sistemas/pull/9)
+     - Criar forma de deletar um totem cadastrado (Emanuel Catão)
 
-- RF08: Mostrar Lojas de artigos Regionais
-    - Task 01: Criar cadastro para lojas de artigos regionais (nome, endereço, categoria) (Lucas José)
- 
-- RNF04: Definir design da aplicação
-    - Task: Montar protótipo da tela principal (Emanuel Catão)
-    - Task: Montar protótipo da tela das localidades (Lucas José)
- 
+- [RF03: Mapa do Tocantins](https://github.com/wchar-t/projeto_de_sistemas/pull/8)
+     - Inserir integração com maps
+     - Tela com o mapa do tocantins
+
