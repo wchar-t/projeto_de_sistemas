@@ -27,7 +27,7 @@
     - Implementar autenticação usando email e senha. (João Pedro Pereira)
 
 
-### Sprint 02 (04/09 - 21/09)
+### Sprint 02 (04/09 - 18/09)
 
 - [RF10: Cadastrar Totem](https://github.com/wchar-t/projeto_de_sistemas/pull/6)
     - Criar método de registro para totens no sistema (João Pedro Pereira)
@@ -43,5 +43,16 @@
      - Tela com o mapa do tocantins
 - [RF05-04: Detalhar Ponto turístico](https://github.com/wchar-t/projeto_de_sistemas/pull/11)
      - Cadastro de ponto turístico 
-     - Inserção do pin no mapa
+     - Inserir do pin no mapa
+ 
+### Sprint 03 (28/09 - 02/09)
+
+- RNF08 - Interface
+    - Adicionar a troca de rotas 
+ 
+- RF05 - Drawer
+    - Adicionar a visualização do ponto turistico via drawer
+     
+- RF08 - Loja de Artigos Regionais
+    - Adicionar cadastro de loja de artigos regionais
 
