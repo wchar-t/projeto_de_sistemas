@@ -15,6 +15,7 @@ model User {
   password  String
   createdAt DateTime @default(now())
   totems    Totem[]
+  spots     Spots[]
 }
 
 model Totem {
@@ -26,4 +27,19 @@ model Totem {
   description String
   lastActive  DateTime?
   createdAt   DateTime  @default(now())
+}
+
+model Spots {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String   @map("_userId") @db.ObjectId
+  user        User     @relation(fields: [userId], references: [id])
+  title       String
+  subtitle    String
+  description String
+  images      String[]
+  price       Int
+  priceFormat String
+  coords      Float[]
+  icon        String
+  createdAt   DateTime @default(now())
 }

@@ -3,6 +3,10 @@ export default interface Totem {
   userId: string,
   key: string,
   description: string,
+  coords: {
+    lat: number,
+    lng: number,
+  },
   lastActive: Date,
   createdAt: Date,
 }

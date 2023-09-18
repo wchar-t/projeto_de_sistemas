@@ -1,7 +1,7 @@
 import Session from '@/interfaces/shared/Session';
-import TotemSession from '../interfaces/shared/TotemSession';
 import LoginRegisterSuccess from '@/interfaces/client/LoginRegisterSuccess';
 import Totem from '@/interfaces/client/Totem';
+import Location from '@/interfaces/client/Location';
 
 /* eslint-disable no-undef */
 export interface SuccessfulResponse<Data extends Record<string, any>> {
@@ -113,11 +113,39 @@ export default class Api {
     return request<{status: string}>('/api/totems/register', { key, description, lat, lng });
   }
 
-  static async getTotems(): Promise<RequestResponse<{totems: Totem[]}>> {
-    return request<{totems: Totem[]}>('/api/totems');
+  static async getTotems(): Promise<RequestResponse<Totem[]>> {
+    return request<Totem[]>('/api/totems');
   }
 
   static async deleteTotem(key: string): Promise<RequestResponse<{ status: string }>> {
     return request<{ status: string }>('/api/totems/delete', { key });
+  }
+
+  static async registerLocation(
+    title: string,
+    subtitle: string,
+    description: string,
+    images: string[],
+    price: number,
+    priceFormat: string,
+    icon: string,
+    lat: number,
+    lng: number,
+  ): Promise<RequestResponse<{status: string}>> {
+    return request<{status: string}>('/api/locations/register', {
+      title,
+      subtitle,
+      description,
+      images,
+      price,
+      priceFormat,
+      icon,
+      lat,
+      lng,
+    });
+  }
+
+  static async getLocations(): Promise<RequestResponse<Location[]>> {
+    return request<Location[]>('/api/locations');
   }
 }
