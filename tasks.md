@@ -41,4 +41,7 @@
 - [RF03: Mapa do Tocantins](https://github.com/wchar-t/projeto_de_sistemas/pull/8)
      - Inserir integração com maps
      - Tela com o mapa do tocantins
+- [RF05-03: Detalhar Ponto turístico](https://github.com/wchar-t/projeto_de_sistemas/pull/11)
+     - Cadastro de ponto turístico 
+     - Inserção do pin no mapa
 
