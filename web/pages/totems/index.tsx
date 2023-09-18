@@ -14,6 +14,7 @@ import {
   Tr,
   VStack,
   useDisclosure,
+  Text,
 } from '@chakra-ui/react';
 import Page from '@/components/Page';
 import TotemRegisterModal from '@/components/TotemRegister';
@@ -26,14 +27,23 @@ export default function Totems() {
   const [totems, setTotems] = useState<Totem[]>([]);
   const [filteredTotems, setFilteredTotems] = useState<Totem[]>([]);
 
+  async function updateTotems() {
+    const { error, result } = await Api.getTotems();
+
+    if (error) return;
+
+    setTotems(result.totems);
+    setFilteredTotems(result.totems);
+  }
+  
+  async function onDelete(key: string) {
+    await Api.deleteTotem(key);
+    return await updateTotems();
+  }
+
   useEffect(() => {
     (async () => {
-      const { error, result } = await Api.getTotems();
-
-      if (error) return;
-
-      setTotems(result.totems);
-      setFilteredTotems(result.totems);
+      await updateTotems();
     })();
   }, []);
 
@@ -76,6 +86,7 @@ export default function Totems() {
                   <Th>Descrição</Th>
                   <Th>Criado em</Th>
                   <Th>Última Atividade</Th>
+                  <Th>Apagar</Th>
                 </Tr>
               </Thead>
               <Tbody>
@@ -90,6 +101,7 @@ export default function Totems() {
                         ? new Date(e.lastActive).toLocaleString()
                         : 'Nunca'}
                     </Td>
+                    <Td><Text color="tomato" onClick={() => onDelete(e.key)} _hover={{ cursor: 'pointer' }}>Deletar</Text></Td>
                   </Tr>
                 ))}
               </Tbody>
