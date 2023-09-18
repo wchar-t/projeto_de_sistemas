@@ -36,11 +36,6 @@ export default function Totems() {
     setTotems(_totems);
     setFilteredTotems(_totems);
   }
-  
-  async function onDelete(key: string) {
-    await Api.deleteTotem(key);
-    return await updateTotems();
-  }
 
   useEffect(() => {
     (async () => {
@@ -64,7 +59,7 @@ export default function Totems() {
               <Input
                 width="100%"
                 type="text"
-                placeholder="Chave"
+                placeholder="Título"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
@@ -83,26 +78,18 @@ export default function Totems() {
               <Thead>
                 <Tr>
                   <Th isNumeric>#</Th>
-                  <Th>Chave</Th>
-                  <Th>Descrição</Th>
-                  <Th>Criado em</Th>
-                  <Th>Última Atividade</Th>
-                  <Th>Apagar</Th>
+                  <Th>Título</Th>
+                  <Th>Latitude</Th>
+                  <Th>Longitude</Th>
                 </Tr>
               </Thead>
               <Tbody>
                 {filteredTotems.map((e, i) => (
                   <Tr key={e.key}>
                     <Td isNumeric>{i}</Td>
-                    <Td>{e.key}</Td>
-                    <Td>{e.description}</Td>
-                    <Td>{new Date(e.createdAt).toLocaleString()}</Td>
-                    <Td>
-                      {e.lastActive
-                        ? new Date(e.lastActive).toLocaleString()
-                        : 'Nunca'}
-                    </Td>
-                    <Td><Text color="tomato" onClick={() => onDelete(e.key)} _hover={{ cursor: 'pointer' }}>Deletar</Text></Td>
+                    <Td>titulo</Td>
+                    <Td>{e.coords.lat}</Td>
+                    <Td>{e.coords.lng}</Td>
                   </Tr>
                 ))}
               </Tbody>
