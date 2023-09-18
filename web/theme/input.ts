@@ -4,6 +4,10 @@ import { createMultiStyleConfigHelpers } from '@chakra-ui/styled-system';
 const { definePartsStyle, defineMultiStyleConfig } = createMultiStyleConfigHelpers(parts.keys);
 
 const baseStyle = definePartsStyle({
+  addon: {
+    backgroundColor: '#202020',
+    border: 0,
+  },
   field: {
     backgroundColor: '#171717',
     border: '#131313',

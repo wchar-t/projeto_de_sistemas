@@ -14,44 +14,44 @@ import {
   Tr,
   VStack,
   useDisclosure,
-  Text,
 } from '@chakra-ui/react';
 import Page from '@/components/Page';
-import TotemRegisterModal from '@/components/TotemRegister';
-import Totem from '@/interfaces/client/Totem';
+import SpotRegisterModal from '@/components/SpotRegisterModal';
 import Api from '@/lib/api';
+import Location from '@/interfaces/client/Location';
 
 export default function Totems() {
   const [search, setSearch] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [totems, setTotems] = useState<Totem[]>([]);
-  const [filteredTotems, setFilteredTotems] = useState<Totem[]>([]);
+  const [locations, setLocations] = useState<Location[]>([]);
+  const [filteredLocations, setFilteredLocations] = useState<Location[]>([]);
 
-  async function updateTotems() {
-    const { error, result } = await Api.getTotems();
+  async function updateLocations() {
+    const { error, result } = await Api.getLocations();
 
     if (error) return;
 
-    const _totems = result.totems.map((e: any) => ({ ...e, coords: { lat: e.coords[0], lng: e.coords[1] } }));
-    setTotems(_totems);
-    setFilteredTotems(_totems);
+    setLocations(result);
+    setFilteredLocations(result);
+    console.log(result);
   }
 
   useEffect(() => {
     (async () => {
-      await updateTotems();
+      await updateLocations();
     })();
   }, []);
 
   useEffect(() => {
-    setFilteredTotems(
-      totems.filter((e) => e.key.toLowerCase().includes(search.toLowerCase())),
+    const s = search.toLowerCase();
+    setFilteredLocations(
+      locations.filter((e) => e.title.toLowerCase().includes(s)),
     );
   }, [search]);
 
   return (
     <Page center>
-      <TotemRegisterModal isOpen={isOpen} onClose={onClose} />
+      <SpotRegisterModal isOpen={isOpen} onClose={onClose} />
       <Box width="100%" maxWidth={1280}>
         <VStack>
           <HStack width="100%">
@@ -84,10 +84,10 @@ export default function Totems() {
                 </Tr>
               </Thead>
               <Tbody>
-                {filteredTotems.map((e, i) => (
-                  <Tr key={e.key}>
+                {filteredLocations.map((e, i) => (
+                  <Tr key={e.id}>
                     <Td isNumeric>{i}</Td>
-                    <Td>titulo</Td>
+                    <Td>{e.title}</Td>
                     <Td>{e.coords.lat}</Td>
                     <Td>{e.coords.lng}</Td>
                   </Tr>

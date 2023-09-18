@@ -17,7 +17,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import Page from '@/components/Page';
-import TotemRegisterModal from '@/components/TotemRegister';
+import TotemRegisterModal from '@/components/TotemRegisterModal';
 import Totem from '@/interfaces/client/Totem';
 import Api from '@/lib/api';
 
@@ -32,14 +32,17 @@ export default function Totems() {
 
     if (error) return;
 
-    const _totems = result.totems.map((e: any) => ({ ...e, coords: { lat: e.coords[0], lng: e.coords[1] } }));
-    setTotems(_totems);
-    setFilteredTotems(_totems);
+    const local = result.map((e: any) => ({
+      ...e,
+      coords: { lat: e.coords[0], lng: e.coords[1] },
+    }));
+    setTotems(local);
+    setFilteredTotems(local);
   }
-  
+
   async function onDelete(key: string) {
     await Api.deleteTotem(key);
-    return await updateTotems();
+    return updateTotems();
   }
 
   useEffect(() => {
@@ -102,7 +105,15 @@ export default function Totems() {
                         ? new Date(e.lastActive).toLocaleString()
                         : 'Nunca'}
                     </Td>
-                    <Td><Text color="tomato" onClick={() => onDelete(e.key)} _hover={{ cursor: 'pointer' }}>Deletar</Text></Td>
+                    <Td>
+                      <Text
+                        color="tomato"
+                        onClick={() => onDelete(e.key)}
+                        _hover={{ cursor: 'pointer' }}
+                      >
+                        Deletar
+                      </Text>
+                    </Td>
                   </Tr>
                 ))}
               </Tbody>
