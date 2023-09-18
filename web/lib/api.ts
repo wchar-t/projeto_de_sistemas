@@ -116,4 +116,8 @@ export default class Api {
   static async getTotems(): Promise<RequestResponse<{totems: Totem[]}>> {
     return request<{totems: Totem[]}>('/api/totems');
   }
+
+  static async deleteTotem(key: string): Promise<RequestResponse<{ status: string }>> {
+    return request<{ status: string }>('/api/totems/delete', { key });
+  }
 }
