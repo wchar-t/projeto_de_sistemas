@@ -1,10 +1,8 @@
 # GuiaTur Tocantins
 
 **Documentação do desenvolvimento:**
-  - [Quadro de atividades Kanban](https://trello.com/b/z1z1tB6q/guiatur-tocantins)
   - [Documentação de requisitos](requirements.md)
   - [Relação de sprints e tasks (atualizada a cada sprint)](tasks.md)
-
 
 **Descrição:**
 Desenvolver o GuiaTur Tocantins, um aplicativo inovador que oferece informações completas sobre pontos turísticos e atrações no estado do Tocantins. O app será acessível através de totems estrategicamente localizados em locais-chave, como shoppings, aeroportos e rodoviárias, permitindo que os turistas tenham acesso a um guia completo para explorar a região.
@@ -92,4 +90,3 @@ O uso de uma tvbox se justifica por:
 - Desenvolvimento e manutenção do aplicativo.
 - Custos de marketing e divulgação.
 - Despesas relacionadas a parcerias estratégicas.
-
