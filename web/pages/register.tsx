@@ -3,6 +3,7 @@ import Link from 'next/link';
 import {
   Alert,
   AlertIcon,
+  Box,
   Button,
   FormControl,
   FormLabel,
@@ -40,13 +41,13 @@ export default function Register() {
 
   return (
     <Page center>
-      <VStack spacing={2.5} maxWidth={450} width="100%" alignItems="start">
-        <div>
+      <VStack spacing={30} maxWidth={450} width="100%" alignItems="start">
+        <Box width="100%">
           <Text fontSize="5xl">Registro</Text>
           <Text color="#777">
             Já tem uma conta? <Link href="/login">Fazer login</Link>
           </Text>
-        </div>
+        </Box>
 
         {apiError ? (
           <Alert status="error" width="100%" variant="left-accent">
@@ -55,48 +56,50 @@ export default function Register() {
           </Alert>
         ) : null}
 
-        <HStack>
+        <Box width="100%">
+          <HStack>
+            <FormControl isRequired>
+              <FormLabel>Nome</FormLabel>
+              <Input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </FormControl>
+            <FormControl isRequired>
+              <FormLabel>Sobrenome</FormLabel>
+              <Input
+                type="text"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+              />
+            </FormControl>
+          </HStack>
           <FormControl isRequired>
-            <FormLabel>Nome</FormLabel>
+            <FormLabel>Usuário</FormLabel>
             <Input
               type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={user}
+              onChange={(e) => setUser(e.target.value)}
             />
           </FormControl>
           <FormControl isRequired>
-            <FormLabel>Sobrenome</FormLabel>
+            <FormLabel>Email</FormLabel>
             <Input
-              type="text"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </FormControl>
-        </HStack>
-        <FormControl isRequired>
-          <FormLabel>Usuário</FormLabel>
-          <Input
-            type="text"
-            value={user}
-            onChange={(e) => setUser(e.target.value)}
-          />
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel>Email</FormLabel>
-          <Input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel>Senha</FormLabel>
-          <Input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </FormControl>
+          <FormControl isRequired>
+            <FormLabel>Senha</FormLabel>
+            <Input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </FormControl>
+        </Box>
         <Button colorScheme="purple" paddingX={45} onClick={() => submit()}>
           Enviar
         </Button>

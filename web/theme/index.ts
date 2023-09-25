@@ -4,6 +4,7 @@ import Table from './table';
 import Modal from './modal';
 import Textarea from './textarea';
 import Select from './select';
+import Alert from './alert';
 
 export default extendTheme({
   styles: {
@@ -27,5 +28,6 @@ export default extendTheme({
     Modal,
     Textarea,
     Select,
+    Alert,
   },
 });
