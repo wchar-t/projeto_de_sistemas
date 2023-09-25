@@ -39,7 +39,7 @@ export default function Register() {
             Não tem uma conta? <Link href="/register">Fazer registro</Link>
           </Text>
           <Text color="#777">
-          Ou que tal se <Link href="/totem/login">Logar como totem</Link>
+            Ou que tal se <Link href="/totem/login">Logar como totem</Link>
           </Text>
         </Box>
 

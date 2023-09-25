@@ -148,4 +148,10 @@ export default class Api {
   static async getLocations(): Promise<RequestResponse<Location[]>> {
     return request<Location[]>('/api/locations');
   }
+
+  static logout() {
+    window.localStorage.removeItem('token');
+    window.localStorage.removeItem('totemToken');
+    this.session = null;
+  }
 }
