@@ -1,24 +1,40 @@
 import { createRef, useEffect, useRef, useState } from 'react';
-import { Box } from '@chakra-ui/react';
+import { Box, useDisclosure } from '@chakra-ui/react';
 import Page from '@/components/Page';
 import Api from '@/lib/api';
+import Location from '@/interfaces/client/Location';
+import LocationPopupModal from '@/components/LocationPopupModal';
 
 declare const window: any;
 
 export default function Home() {
   const [isMapsLoaded, setIsMapsLoaded] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState<Location | null>(
+    null,
+  );
   const map = useRef<any | null>(null); // window.google.maps.Map
   const mapsWrapperRef = createRef<HTMLDivElement>();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
-  function addMarker(lat: number, lng: number, icon: string) {
-    return new window.google.maps.Marker({
-      position: new window.google.maps.LatLng(lat, lng),
+  // eslint-disable-next-line no-unused-vars
+  function addMarker(location: Location, onClick?: (loc: Location) => void) {
+    const marker = new window.google.maps.Marker({
+      position: new window.google.maps.LatLng(
+        location.coords.lat,
+        location.coords.lng,
+      ),
       map: map.current!,
-      icon: `/static/img/maps/${icon}.png`,
+      icon: `/static/img/maps/${location.icon}.png`,
+      optimized: false,
+    });
+
+    marker.addListener('click', () => {
+      (onClick || (() => {}))(location);
     });
   }
 
   async function setupMap() {
+    // TODO: get from API
     const response = fetch('/static/geojson/tocantins.json');
     const data = await response.then((e) => e.json());
     const { result: locations } = await Api.getLocations();
@@ -46,9 +62,15 @@ export default function Home() {
       fillOpacity: 1,
     });
 
-    locations!.forEach((location) => {
-      addMarker(location.coords.lat, location.coords.lng, location.icon);
-    });
+    if (locations) {
+      locations.forEach((location) => {
+        addMarker(location, (l) => {
+          console.log(l);
+          setSelectedLocation(l);
+          onOpen();
+        });
+      });
+    }
   }
 
   useEffect(() => {
@@ -87,6 +109,11 @@ export default function Home() {
 
   return (
     <Page padding={0}>
+      <LocationPopupModal
+        location={selectedLocation}
+        isOpen={isOpen}
+        onClose={onClose}
+      />
       <Box ref={mapsWrapperRef} height="100vh" width="100vw" />
     </Page>
   );
