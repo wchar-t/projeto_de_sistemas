@@ -11,6 +11,6 @@ export default interface Location {
     lat: number,
     lng: number,
   },
-  icon: string,
+  icon: 'location-pin' | 'heat' | 'canyon' | 'mountains' | 'water',
   createdAt: Date,
 }
