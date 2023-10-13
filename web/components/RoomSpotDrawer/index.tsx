@@ -42,10 +42,8 @@ export default function RoomSpotDrawer({
 
   const [isLoading, setIsLoading] = useState(false);
   const [rooms, setRooms] = useState<Room[]>([]);
-  const [currentRoom, setCurrentRoom] = useState<Room>(null);
-  const [occupiedDate, setOccupiedDate] = useState(
-    new Date().toLocaleDateString().split('/').reverse().join('-'),
-  );
+  const [currentRoom, setCurrentRoom] = useState<Room | null>(null);
+  const [occupiedDate, setOccupiedDate] = useState('');
   const [occupiedRooms, setOccupiedRooms] = useState<
     {
       name: string;
@@ -71,9 +69,21 @@ export default function RoomSpotDrawer({
     setIsLoading(true);
 
     (async () => {
+      const timestamp = Math.floor(new Date(occupiedDate).getTime() / 1000);
       const { result: roomsResult } = (await Api.getRooms(spotId)) ?? [];
-      const { result: occupiedResult } = (await Api.getOccupiedRooms()) ?? [];
+      const { result: occupiedResult } = (await Api.getOccupiedRooms(
+        timestamp,
+        timestamp + 24 * 60 * 60,
+        spotId,
+      )) ?? [];
+      
+      console.log(roomsResult)
+      roomsResult?.push({ id: '', name: 'novo', total: 0 });
     })();
+
+    setOccupiedDate(
+      new Date().toISOString().split('T')[0],
+    );
 
     setTimeout(() => setIsLoading(false), 5000);
   }, [spotId]);
@@ -154,6 +164,7 @@ export default function RoomSpotDrawer({
           <FormControl isRequired>
             <FormLabel>Data</FormLabel>
             <Skeleton isLoaded={!isLoading}>
+              <input type="date" />
               <Input
                 type="date"
                 value={occupiedDate}
