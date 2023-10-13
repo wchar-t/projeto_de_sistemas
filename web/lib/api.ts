@@ -2,6 +2,7 @@ import Session from '@/interfaces/shared/Session';
 import LoginRegisterSuccess from '@/interfaces/client/LoginRegisterSuccess';
 import Totem from '@/interfaces/client/Totem';
 import Location from '@/interfaces/client/Location';
+import Room from '@/interfaces/client/Room';
 
 /* eslint-disable no-undef */
 export interface SuccessfulResponse<Data extends Record<string, any>> {
@@ -145,8 +146,20 @@ export default class Api {
     });
   }
 
-  static async getLocations(): Promise<RequestResponse<Location[]>> {
-    return request<Location[]>('/api/locations');
+  static async getLocations(user?: string): Promise<RequestResponse<Location[]>> {
+    return request<Location[]>(user ? `/api/locations?user=${user}` : '/api/locations');
+  }
+
+  static async getRooms(location: string): Promise<RequestResponse<Room[]>> {
+    return request<Room[]>(`/api/location/${location}/rooms`);
+  }
+
+  static async getOccupiedRooms(
+    start: EpochTimeStamp,
+    end: EpochTimeStamp,
+    location: string,
+  ): Promise<RequestResponse<Room[]>> {
+    return request<Room[]>(`/api/location/${location}/occupied?start=${start}&end=${end}`);
   }
 
   static logout() {

@@ -6,6 +6,8 @@ import Textarea from './textarea';
 import Select from './select';
 import Alert from './alert';
 import Menu from './menu';
+import Skeleton from './skeleton';
+import Drawer from './drawer';
 
 export default extendTheme({
   styles: {
@@ -31,5 +33,7 @@ export default extendTheme({
     Select,
     Alert,
     Menu,
+    Skeleton,
+    Drawer,
   },
 });

@@ -3,7 +3,11 @@ import { GuiaTurApiResponse } from '@/interfaces/server/Response';
 import prisma from '@/schema/client';
 
 async function handler(req: GuiaTurApiRequest, res: GuiaTurApiResponse) {
-  const docs = (await prisma.spots.findMany()).map((e) => ({
+  const docs = (await prisma.spots.findMany({
+    where: {
+      userId: req.query?.user as string | undefined,
+    },
+  })).map((e) => ({
     ...e,
     coords: {
       lat: e.coords[0],

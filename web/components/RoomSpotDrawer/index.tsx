@@ -22,28 +22,27 @@ import {
   Th,
   Tbody,
   Td,
+  Skeleton,
 } from '@chakra-ui/react';
+import Room from '@/interfaces/client/Room';
+import Api from '@/lib/api';
 
 interface RoomSpotDrawerOptions {
+  spotId?: string;
   isOpen: boolean;
   onClose: () => void;
 }
 
 export default function RoomSpotDrawer({
+  spotId,
   isOpen,
   onClose,
 }: RoomSpotDrawerOptions) {
-  const [rooms] = useState<
-    {
-      id: string;
-      name: string;
-      quantity: number;
-    }[]
-  >([
-    { id: '', name: 'novo', quantity: 0 },
-    { id: '-1', name: 'exemplo', quantity: 10 },
-  ]);
-  const [currentRoom, setCurrentRoom] = useState(rooms[0]);
+  if (!spotId) return null;
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [rooms, setRooms] = useState<Room[]>([]);
+  const [currentRoom, setCurrentRoom] = useState<Room>(null);
   const [occupiedDate, setOccupiedDate] = useState(
     new Date().toLocaleDateString().split('/').reverse().join('-'),
   );
@@ -64,7 +63,20 @@ export default function RoomSpotDrawer({
 
   useEffect(() => {
     // setOccupiedRooms([]);
+    console.log(occupiedDate);
   }, [occupiedDate]);
+
+  useEffect(() => {
+    setOccupiedRooms([]);
+    setIsLoading(true);
+
+    (async () => {
+      const { result: roomsResult } = (await Api.getRooms(spotId)) ?? [];
+      const { result: occupiedResult } = (await Api.getOccupiedRooms()) ?? [];
+    })();
+
+    setTimeout(() => setIsLoading(false), 5000);
+  }, [spotId]);
 
   return (
     <Drawer isOpen={isOpen} onClose={onClose} size="md">
@@ -80,44 +92,50 @@ export default function RoomSpotDrawer({
           <VStack spacing={5}>
             <FormControl isRequired>
               <FormLabel>Formato</FormLabel>
-              <Select
-                isRequired
-                textTransform="capitalize"
-                onChange={(e) => {
-                  const room = rooms.filter(
-                    (c) => c.name === e.target.value,
-                  )[0];
-                  setCurrentRoom(room);
-                }}
-              >
-                {rooms.map((room) => (
-                  <option key={room.id} value={room.name}>
-                    {room.name}
-                  </option>
-                ))}
-              </Select>
+              <Skeleton isLoaded={!isLoading}>
+                <Select
+                  isRequired
+                  textTransform="capitalize"
+                  onChange={(e) => {
+                    const room = rooms.filter(
+                      (c) => c.name === e.target.value,
+                    )[0];
+                    setCurrentRoom(room);
+                  }}
+                >
+                  {rooms.map((room) => (
+                    <option key={room.id} value={room.name}>
+                      {room.name}
+                    </option>
+                  ))}
+                </Select>
+              </Skeleton>
             </FormControl>
             <FormControl isRequired>
               <FormLabel>Nome</FormLabel>
-              <Input
-                type="text"
-                value={currentRoom.name}
-                onChange={(e) => {
-                  const value = e.target.value.toLowerCase();
-                  setCurrentRoom({ ...currentRoom, name: value });
-                }}
-              />
+              <Skeleton isLoaded={!isLoading}>
+                <Input
+                  type="text"
+                  value={currentRoom?.name}
+                  onChange={(e) => {
+                    const value = e.target.value.toLowerCase();
+                    setCurrentRoom({ ...currentRoom, name: value });
+                  }}
+                />
+              </Skeleton>
             </FormControl>
             <FormControl isRequired>
               <FormLabel>Quantidade</FormLabel>
-              <Input
-                type="tel"
-                value={currentRoom.quantity}
-                onChange={(e) => {
-                  const value = parseInt(e.target.value, 10) || 0;
-                  setCurrentRoom({ ...currentRoom, quantity: value });
-                }}
-              />
+              <Skeleton isLoaded={!isLoading}>
+                <Input
+                  type="tel"
+                  value={currentRoom?.total}
+                  onChange={(e) => {
+                    const value = parseInt(e.target.value, 10) || 0;
+                    setCurrentRoom({ ...currentRoom, total: value });
+                  }}
+                />
+              </Skeleton>
             </FormControl>
             <HStack w="100%" justifyContent="flex-end">
               <Button
@@ -135,32 +153,36 @@ export default function RoomSpotDrawer({
           </Text>
           <FormControl isRequired>
             <FormLabel>Data</FormLabel>
-            <Input
-              type="date"
-              value={occupiedDate}
-              onChange={(e) => setOccupiedDate(e.target.value)}
-            />
+            <Skeleton isLoaded={!isLoading}>
+              <Input
+                type="date"
+                value={occupiedDate}
+                onChange={(e) => setOccupiedDate(e.target.value)}
+              />
+            </Skeleton>
           </FormControl>
-          <TableContainer width="100%" borderRadius={6} mt={4}>
-            <Table variant="striped">
-              <Thead>
-                <Tr>
-                  <Th>Nome</Th>
-                  <Th>Alocado</Th>
-                  <Th>Total</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {occupiedRooms.map((e) => (
-                  <Tr key={e.name}>
-                    <Td>{e.name}</Td>
-                    <Td>{e.quantity}</Td>
-                    <Td>{e.total}</Td>
+          <Skeleton isLoaded={!isLoading}>
+            <TableContainer width="100%" borderRadius={6} mt={4}>
+              <Table variant="striped">
+                <Thead>
+                  <Tr>
+                    <Th>Nome</Th>
+                    <Th>Alocado</Th>
+                    <Th>Total</Th>
                   </Tr>
-                ))}
-              </Tbody>
-            </Table>
-          </TableContainer>
+                </Thead>
+                <Tbody>
+                  {occupiedRooms.map((e) => (
+                    <Tr key={e.name}>
+                      <Td>{e.name}</Td>
+                      <Td>{e.quantity}</Td>
+                      <Td>{e.total}</Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
+            </TableContainer>
+          </Skeleton>
         </DrawerBody>
       </DrawerContent>
     </Drawer>
