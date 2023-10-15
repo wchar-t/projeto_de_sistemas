@@ -18,7 +18,7 @@ async function handler(req: GuiaTurApiRequest, res: GuiaTurApiResponse) {
     return res.status(404).json({ error: { code: 'location_not_found', message: 'Local não encontrado' } });
   }
 
-  const docs = await prisma.roomsOccupied.findMany({
+  const occupied = await prisma.roomsOccupied.findMany({
     where: {
       createdAt: {
         gte: start ? new Date(start) : undefined,
@@ -27,7 +27,21 @@ async function handler(req: GuiaTurApiRequest, res: GuiaTurApiResponse) {
     },
   });
 
-  return res.status(200).json({ error: false, result: docs });
+  const rooms = await prisma.rooms.findMany({
+    where: {
+      id: {
+        in: occupied.map((o) => o.roomId),
+      },
+    },
+  });
+
+  const roomsOccupied = rooms.map((room) => ({
+    name: room.name,
+    total: room.total,
+    occupied: occupied.filter((o) => o.roomId === room.id).length,
+  }));
+
+  return res.status(200).json({ error: false, result: roomsOccupied });
 }
 
 export default withSession(handler);

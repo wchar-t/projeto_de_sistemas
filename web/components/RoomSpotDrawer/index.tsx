@@ -6,7 +6,6 @@ import {
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
-  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   Text,
@@ -26,6 +25,7 @@ import {
 } from '@chakra-ui/react';
 import Room from '@/interfaces/client/Room';
 import Api from '@/lib/api';
+import RoomOccupied from '@/interfaces/client/RoomOccupied';
 
 interface RoomSpotDrawerOptions {
   spotId?: string;
@@ -42,26 +42,49 @@ export default function RoomSpotDrawer({
 
   const [isLoading, setIsLoading] = useState(false);
   const [rooms, setRooms] = useState<Room[]>([]);
-  const [currentRoom, setCurrentRoom] = useState<Room | null>(null);
+  const [currentRoom, setCurrentRoom] = useState<Room>({
+    id: '',
+    name: 'novo',
+    total: 0,
+  });
   const [occupiedDate, setOccupiedDate] = useState('');
-  const [occupiedRooms, setOccupiedRooms] = useState<
-    {
-      name: string;
-      quantity: number;
-      total: number;
-    }[]
-  >([
-    { name: 'Exemplo', quantity: 10, total: 20 },
-    { name: 'Exemplo 2', quantity: 10, total: 30 },
-  ]);
+  const [occupiedRooms, setOccupiedRooms] = useState<RoomOccupied[]>([]);
+
+  async function refreshOccupiedRooms() {
+    const start = Math.floor(new Date(occupiedDate).getTime() / 1000);
+    const end = start + 24 * 60 * 60;
+    const { result: occupiedResult } = await Api.getOccupiedRooms(
+      start,
+      end,
+      spotId as string,
+    );
+
+    setOccupiedRooms(occupiedResult ?? []);
+  }
+
+  async function refreshRooms() {
+    let { result: roomsResult } = await Api.getRooms(spotId as string);
+    roomsResult = roomsResult ?? [];
+    roomsResult.unshift({ id: '', name: '', total: 0 });
+
+    setRooms(roomsResult ?? []);
+    setCurrentRoom(roomsResult[0]);
+  }
 
   async function onRoomsSave() {
-    // console.log(rooms, currentRoom);
+    await Api.saveRoom(
+      spotId as string,
+      currentRoom.name,
+      currentRoom.total,
+      currentRoom.id,
+    );
+    await refreshRooms();
   }
 
   useEffect(() => {
-    // setOccupiedRooms([]);
-    console.log(occupiedDate);
+    (async () => {
+      await refreshOccupiedRooms();
+    })();
   }, [occupiedDate]);
 
   useEffect(() => {
@@ -69,23 +92,12 @@ export default function RoomSpotDrawer({
     setIsLoading(true);
 
     (async () => {
-      const timestamp = Math.floor(new Date(occupiedDate).getTime() / 1000);
-      const { result: roomsResult } = (await Api.getRooms(spotId)) ?? [];
-      const { result: occupiedResult } = (await Api.getOccupiedRooms(
-        timestamp,
-        timestamp + 24 * 60 * 60,
-        spotId,
-      )) ?? [];
-      
-      console.log(roomsResult)
-      roomsResult?.push({ id: '', name: 'novo', total: 0 });
+      await refreshRooms();
+      await refreshOccupiedRooms();
+      setIsLoading(false);
     })();
 
-    setOccupiedDate(
-      new Date().toISOString().split('T')[0],
-    );
-
-    setTimeout(() => setIsLoading(false), 5000);
+    setOccupiedDate(new Date().toISOString().split('T')[0]);
   }, [spotId]);
 
   return (
@@ -112,10 +124,11 @@ export default function RoomSpotDrawer({
                     )[0];
                     setCurrentRoom(room);
                   }}
+                  value={currentRoom?.name}
                 >
                   {rooms.map((room) => (
                     <option key={room.id} value={room.name}>
-                      {room.name}
+                      {room.name === '' ? 'novo' : room.name}
                     </option>
                   ))}
                 </Select>
@@ -129,7 +142,10 @@ export default function RoomSpotDrawer({
                   value={currentRoom?.name}
                   onChange={(e) => {
                     const value = e.target.value.toLowerCase();
-                    setCurrentRoom({ ...currentRoom, name: value });
+                    setCurrentRoom({
+                      ...currentRoom,
+                      name: value,
+                    });
                   }}
                 />
               </Skeleton>
@@ -164,7 +180,6 @@ export default function RoomSpotDrawer({
           <FormControl isRequired>
             <FormLabel>Data</FormLabel>
             <Skeleton isLoaded={!isLoading}>
-              <input type="date" />
               <Input
                 type="date"
                 value={occupiedDate}
@@ -186,7 +201,7 @@ export default function RoomSpotDrawer({
                   {occupiedRooms.map((e) => (
                     <Tr key={e.name}>
                       <Td>{e.name}</Td>
-                      <Td>{e.quantity}</Td>
+                      <Td>{e.occupied}</Td>
                       <Td>{e.total}</Td>
                     </Tr>
                   ))}

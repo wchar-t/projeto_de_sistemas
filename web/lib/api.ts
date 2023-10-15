@@ -3,6 +3,7 @@ import LoginRegisterSuccess from '@/interfaces/client/LoginRegisterSuccess';
 import Totem from '@/interfaces/client/Totem';
 import Location from '@/interfaces/client/Location';
 import Room from '@/interfaces/client/Room';
+import RoomOccupied from '@/interfaces/client/RoomOccupied';
 
 /* eslint-disable no-undef */
 export interface SuccessfulResponse<Data extends Record<string, any>> {
@@ -158,8 +159,17 @@ export default class Api {
     start: EpochTimeStamp,
     end: EpochTimeStamp,
     location: string,
-  ): Promise<RequestResponse<Room[]>> {
-    return request<Room[]>(`/api/location/${location}/occupied?start=${start}&end=${end}`);
+  ): Promise<RequestResponse<RoomOccupied[]>> {
+    return request<RoomOccupied[]>(`/api/location/${location}/occupied?start=${start}&end=${end}`);
+  }
+
+  static async saveRoom(location: string, name: string, total: number, room = ''): Promise<RequestResponse<{ status: string }>> {
+    return request<{ status: string }>(`/api/location/${location}/rooms/new`, {
+      location,
+      name,
+      total,
+      room,
+    });
   }
 
   static logout() {
