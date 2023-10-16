@@ -6,7 +6,6 @@ import {
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
-  DrawerHeader,
   DrawerOverlay,
   Text,
   FormControl,
@@ -22,6 +21,8 @@ import {
   Tbody,
   Td,
   Skeleton,
+  InputGroup,
+  InputLeftAddon,
 } from '@chakra-ui/react';
 import Room from '@/interfaces/client/Room';
 import Api from '@/lib/api';
@@ -45,6 +46,7 @@ export default function RoomSpotDrawer({
   const [currentRoom, setCurrentRoom] = useState<Room>({
     id: '',
     name: 'novo',
+    price: 0,
     total: 0,
   });
   const [occupiedDate, setOccupiedDate] = useState('');
@@ -64,8 +66,11 @@ export default function RoomSpotDrawer({
 
   async function refreshRooms() {
     let { result: roomsResult } = await Api.getRooms(spotId as string);
-    roomsResult = roomsResult ?? [];
-    roomsResult.unshift({ id: '', name: '', total: 0 });
+    roomsResult = (roomsResult ?? []).map((e) => ({
+      ...e,
+      price: (parseFloat(e.price.toString()) / 100).toFixed(2),
+    }));
+    roomsResult.unshift({ id: '', name: '', price: 0, total: 0 });
 
     setRooms(roomsResult ?? []);
     setCurrentRoom(roomsResult[0]);
@@ -75,7 +80,11 @@ export default function RoomSpotDrawer({
     await Api.saveRoom(
       spotId as string,
       currentRoom.name,
-      currentRoom.total,
+      parseInt(
+        (parseFloat((currentRoom?.price || 0).toString()) * 100).toString(10),
+        10,
+      ),
+      parseInt(currentRoom.total.toString(), 10),
       currentRoom.id,
     );
     await refreshRooms();
@@ -105,15 +114,14 @@ export default function RoomSpotDrawer({
       <DrawerOverlay />
       <DrawerContent>
         <DrawerCloseButton />
-        <DrawerHeader>Create your account</DrawerHeader>
 
-        <DrawerBody>
+        <DrawerBody mt={65}>
           <Text mb={4} mt={4} fontWeight={600} opacity={0.8}>
             Vagas Totais
           </Text>
           <VStack spacing={5}>
             <FormControl isRequired>
-              <FormLabel>Formato</FormLabel>
+              <FormLabel>Vaga</FormLabel>
               <Skeleton isLoaded={!isLoading}>
                 <Select
                   isRequired
@@ -148,6 +156,32 @@ export default function RoomSpotDrawer({
                     });
                   }}
                 />
+              </Skeleton>
+            </FormControl>
+            <FormControl isRequired>
+              <FormLabel>Preço</FormLabel>
+              <Skeleton isLoaded={!isLoading}>
+                <InputGroup>
+                  <InputLeftAddon>R$</InputLeftAddon>
+                  <Input
+                    value={currentRoom?.price}
+                    onChange={(e) => {
+                      setCurrentRoom({
+                        ...currentRoom,
+                        price: e.target.value.replace(',', '.'),
+                      });
+                    }}
+                    onBlur={() => {
+                      const p = parseFloat(
+                        (currentRoom?.price || 0).toString(),
+                      ).toFixed(2);
+                      setCurrentRoom({
+                        ...currentRoom,
+                        price: Number.isNaN(p) || p === 'NaN' ? '0.00' : p,
+                      });
+                    }}
+                  />
+                </InputGroup>
               </Skeleton>
             </FormControl>
             <FormControl isRequired>

@@ -8,11 +8,13 @@ export default function Page({
   padding = 30,
   center = false,
   hcenter = false,
+  hasTopBar = true,
   children,
 }: {
   padding?: number;
   center?: boolean;
   hcenter?: boolean;
+  hasTopBar?: boolean;
   children: ReactNode;
 }) {
   function getClasses() {
@@ -28,8 +30,11 @@ export default function Page({
 
   return (
     <div className={styles.page}>
-      <TopBar />
-      <Box className={styles.main} marginTop={Api.getSession() ? '60px' : 0}>
+      {hasTopBar ? <TopBar /> : null}
+      <Box
+        className={styles.main}
+        marginTop={Api.getSession() && hasTopBar ? '60px' : 0}
+      >
         <div className={`${getClasses()}`} style={{ padding }}>
           {children}
         </div>

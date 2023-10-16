@@ -7,7 +7,7 @@ const { definePartsStyle, defineMultiStyleConfig } =
 const baseStyle = definePartsStyle({
   // define the part you're going to style
   dialog: {
-    borderRadius: 'md',
+    borderRadius: '10px',
     bg: '#121212',
   },
 })
