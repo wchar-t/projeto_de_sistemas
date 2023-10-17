@@ -53,6 +53,15 @@
 - RF05 - Drawer
     - Adicionar a visualização do ponto turistico via drawer
      
-- RF08 - Loja de Artigos Regionais
+- RF08 - Loja de Artigos Regionais (Abortada)
     - Adicionar cadastro de loja de artigos regionais
+
+
+### Sprint 04 (02/09 - 16/09)
+
+- RF08 - Comprar Entrada
+    - Criar frontend do cadastro no sistema de entradas
+    - Criar backend do cadastro no sistema de entradas
+    - Criar frontend da compra no sistema de entradas
+    - Criar frontend da compra no sistema de entradas
 
