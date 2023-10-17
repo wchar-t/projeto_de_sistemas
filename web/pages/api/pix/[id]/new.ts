@@ -9,15 +9,11 @@ export default async function handler(req: GuiaTurApiRequest, res: GuiaTurApiRes
     return res.status(400).json({ error: { code: 'invalid_data', message: 'Dados inválidos' } });
   }
 
-  const doc = await prisma.fakeSaleLock.findUnique({
-    where: {
+  await prisma.fakeSaleLock.create({
+    data: {
       seed: id as string,
     },
   });
-
-  if (!doc) {
-    return res.status(404).json({ error: { code: 'not_found', message: 'Não encontrado' } });
-  }
 
   return res.status(200).json({ error: false, result: { status: 'ok' } });
 }
