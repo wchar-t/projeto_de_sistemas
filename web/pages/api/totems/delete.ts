@@ -5,7 +5,7 @@ import prisma from "@/schema/client";
 
 async function handler(req: GuiaTurApiRequest, res: GuiaTurApiResponse) {
   const { key }: { key: string } = req.body;
-  
+
   try {
     await prisma.totem.delete({
       where: {

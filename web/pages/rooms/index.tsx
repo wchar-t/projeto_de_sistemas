@@ -9,16 +9,19 @@ import RoomSpotDrawer from '@/components/RoomSpotDrawer';
 
 export default function Totems() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [spotId, setSpotId] = useState('');
   const [locations, setLocations] = useState<Location[]>([]);
 
   useEffect(() => {
     // TODO: fetch locations created by the user. Just add an id
-    Api.getLocations().then((response) => setLocations(response.result ?? []));
+    Api.getLocations(Api.getSession()?.id).then((response) => {
+      setLocations(response.result ?? []);
+    });
   }, []);
 
   return (
     <Page hcenter>
-      <RoomSpotDrawer isOpen={isOpen} onClose={onClose} />
+      <RoomSpotDrawer spotId={spotId} isOpen={isOpen} onClose={onClose} />
       <Box width="100%" maxWidth={1280}>
         <Text fontSize="3xl" mb={4}>
           Selecione um dos seus pontos
@@ -30,7 +33,10 @@ export default function Totems() {
               label={e.title}
               type={e.icon}
               img={e.images[0]}
-              onClick={onOpen}
+              onClick={() => {
+                setSpotId(e.id);
+                onOpen();
+              }}
             />
           ))}
         </Box>
