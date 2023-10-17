@@ -42,4 +42,31 @@ model Spots {
   coords      Float[]
   icon        String
   createdAt   DateTime @default(now())
+  rooms       Rooms[]
+}
+
+model Rooms {
+  id              String          @id @default(auto()) @map("_id") @db.ObjectId
+  spotId          String          @map("_spotId") @db.ObjectId
+  spot            Spots           @relation(fields: [spotId], references: [id])
+  name            String
+  total           Int
+  occupiedHistory RoomsOccupied[]
+}
+
+model RoomsOccupied {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  roomId    String   @map("_roomId") @db.ObjectId
+  room      Rooms    @relation(fields: [roomId], references: [id])
+  saleId    String   @map("_saleId") @db.ObjectId
+  sale      Sale     @relation(fields: [saleId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Sale {
+  id        String          @id @default(auto()) @map("_id") @db.ObjectId
+  cpf       BigInt
+  name      String
+  createdAt DateTime        @default(now())
+  rooms     RoomsOccupied[]
 }

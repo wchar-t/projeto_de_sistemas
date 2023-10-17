@@ -27,6 +27,7 @@ export default function TopBar() {
         <div className={styles.mm}>
           <Link href="/totems">Totems</Link>
           <Link href="/spots">Pontos</Link>
+          <Link href="/rooms">Vagas</Link>
         </div>
         <div className={styles.options}>
           <Menu>
