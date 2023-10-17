@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Box } from '@chakra-ui/react';
 import QRCode from 'qrcode';
+import Api from '@/lib/api';
 
 interface PIXQRCodeOptions {
   onSuccess?: () => void;
@@ -13,18 +14,24 @@ export default function PIXQRCode({ onSuccess, seed }: PIXQRCodeOptions) {
   const [isDone, setIsDone] = useState(false);
 
   async function check() {
+    const response = await Api.getPix(btoa(seed));
+
+    if (response.error) {
+      return;
+    }
+
     onSuccess?.();
     setIsDone(true);
   }
 
   useEffect(() => {
     const currentSeed = ` ${seed}`.slice(1);
-    const interval = setInterval(check, 3000);
+    const interval = setInterval(check, 5000);
 
     setTimeout(async () => {
       if (currentSeed !== seed) return;
 
-      const url = `${window.location.origin}/api/pix/${btoa(seed)}`;
+      const url = `${window.location.origin}/api/pix/${btoa(seed)}/new`;
       const src = await QRCode.toDataURL(url, {
         margin: 2,
         scale: 10,

@@ -99,6 +99,22 @@ export default class Api {
     return this.session;
   }
 
+  static getTotemSession(): Session | null {
+    const token = window.localStorage.getItem('totemToken');
+
+    if (!token) {
+      return null;
+    }
+
+    try {
+      const session = JSON.parse(atob(token.split('.')[1]));
+
+      return session;
+    } catch (e) {
+      return null;
+    }
+  }
+
   static async getMe(): Promise<RequestResponse<{
     session: Session,
     jwt: string,
@@ -170,6 +186,35 @@ export default class Api {
       price,
       total,
       room,
+    });
+  }
+
+  static async getPix(seed: string): Promise<RequestResponse<{ status: string }>> {
+    return request<{status: string }>(`/api/pix/${seed}`);
+  }
+
+  static async saveSale(
+    origin: string,
+    totemId: string,
+    seed: string,
+    name: string,
+    cpf: number,
+    email: string,
+    price: number,
+    rooms: {
+      qt: number,
+      room: Room,
+    }[],
+  ): Promise<RequestResponse<{ url: string }>> {
+    return request<{ url: string }>('/api/sales/new', {
+      origin,
+      totemId,
+      seed,
+      name,
+      cpf,
+      email,
+      price,
+      rooms,
     });
   }
 

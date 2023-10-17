@@ -26,6 +26,13 @@ interface CheckoutDrawerOptions {
   onClose: () => void;
 }
 
+interface Order {
+  qt: number;
+  room: Room;
+}
+
+declare const window: any;
+
 export default function CheckoutDrawer({
   spotId,
   timestamp,
@@ -40,7 +47,7 @@ export default function CheckoutDrawer({
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
   const [rooms, setRooms] = useState<Room[]>([]);
   const [currentRoom, setCurrentRoom] = useState<Room>();
-  const [order, setOrder] = useState<{ qt: number; room: Room }[]>([]);
+  const [order, setOrder] = useState<Order[]>([]);
 
   async function refreshRooms() {
     let { result: roomsResult } = await Api.getRooms(spotId as string);
@@ -54,8 +61,24 @@ export default function CheckoutDrawer({
     setCurrentRoom(roomsResult[0]);
   }
 
-  function onSuccess() {
-    // setTimeout(() => onClose(), 5000);
+  async function onSuccess() {
+    setTimeout(() => onClose(), 2000);
+    const response = await Api.saveSale(
+      window.location.origin,
+      Api.getTotemSession()!.id,
+      seed,
+      name,
+      parseInt(cpf.replace(/\D/g, ''), 10) || 0,
+      email,
+      window.order
+        .map((e: Order) => parseFloat(e.room.price.toString()) * e.qt)
+        .reduce((a: number, b: number) => a + b, 0) * 100,
+      window.order,
+    );
+
+    if (response.result?.url) {
+      window.location.href = response.result.url;
+    }
   }
 
   useEffect(() => {
@@ -67,6 +90,7 @@ export default function CheckoutDrawer({
     setSeed('');
     setOrder([]);
     setRooms([]);
+    window.order = [];
     setDate(new Date().toISOString().split('T')[0]);
     setCurrentRoom(undefined);
   }, [timestamp]);
@@ -204,14 +228,16 @@ export default function CheckoutDrawer({
                 colorScheme="purple"
                 w="100%"
                 onClick={() => {
-                  setOrder([
+                  const ords = [
                     ...order,
                     {
                       qt:
                         parseInt((currentRoom?.total || 1).toString(), 10) || 1,
                       room: currentRoom!,
                     },
-                  ]);
+                  ];
+                  window.order = ords;
+                  setOrder(ords);
                 }}
               >
                 Adicionar

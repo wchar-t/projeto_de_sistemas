@@ -77,3 +77,8 @@ model Sale {
   rooms     RoomsOccupied[]
   createdAt DateTime        @default(now())
 }
+
+model FakeSaleLock {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  seed String @unique
+}
