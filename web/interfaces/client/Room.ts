@@ -1,5 +1,6 @@
 export default interface Room {
   id: string,
   name: string,
-  total: number,
+  price: number | string,
+  total: number | string,
 }

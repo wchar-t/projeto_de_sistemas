@@ -65,7 +65,6 @@ export default function Home() {
     if (locations) {
       locations.forEach((location) => {
         addMarker(location, (l) => {
-          console.log(l);
           setSelectedLocation(l);
           onOpen();
         });
@@ -108,7 +107,7 @@ export default function Home() {
   }, [isMapsLoaded]);
 
   return (
-    <Page padding={0}>
+    <Page padding={0} hasTopBar={false}>
       <LocationPopupModal
         location={selectedLocation}
         isOpen={isOpen}

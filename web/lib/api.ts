@@ -163,10 +163,11 @@ export default class Api {
     return request<RoomOccupied[]>(`/api/location/${location}/occupied?start=${start}&end=${end}`);
   }
 
-  static async saveRoom(location: string, name: string, total: number, room = ''): Promise<RequestResponse<{ status: string }>> {
+  static async saveRoom(location: string, name: string, price: number, total: number, room = ''): Promise<RequestResponse<{ status: string }>> {
     return request<{ status: string }>(`/api/location/${location}/rooms/new`, {
       location,
       name,
+      price,
       total,
       room,
     });

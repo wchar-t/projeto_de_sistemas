@@ -4,9 +4,9 @@ import withSession from '@/middlewares/session';
 import prisma from '@/schema/client';
 
 async function handler(req: GuiaTurApiRequest, res: GuiaTurApiResponse) {
-  const { location, name, room, total } = req.body;
+  const { location, name, room, price, total } = req.body;
 
-  if (!location || !name || !total) {
+  if (!location || !name || !total || !price) {
     return res.status(400).json({ error: { code: 'invalid_data', message: 'Dados inválidos' } });
   }
 
@@ -30,6 +30,7 @@ async function handler(req: GuiaTurApiRequest, res: GuiaTurApiResponse) {
         data: {
           name,
           total,
+          price,
         },
       });
     } catch (_e) {
@@ -41,6 +42,7 @@ async function handler(req: GuiaTurApiRequest, res: GuiaTurApiResponse) {
         data: {
           name,
           total,
+          price,
           spotId: location as string,
         },
       });

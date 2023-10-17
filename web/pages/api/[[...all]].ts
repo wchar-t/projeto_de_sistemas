@@ -16,7 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (url.includes('js?key=')) {
     // hint: search for maps-api-v3
     // the base addr will be prepended to routes like common.js, util.js, etc
-    content = content.replace('https://maps.googleapis.com/maps-api-v3/', `/api/maps-api-v3/`);
+    content = content.replace('https://maps.googleapis.com/maps-api-v3/', '/api/maps-api-v3/');
   }
 
   if (url.includes('common.js')) {

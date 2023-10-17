@@ -20,7 +20,7 @@ async function handler(req: GuiaTurApiRequest, res: GuiaTurApiResponse) {
 
   const occupied = await prisma.roomsOccupied.findMany({
     where: {
-      createdAt: {
+      reservedAt: {
         gte: start ? new Date(start) : undefined,
         lte: end ? new Date(end) : undefined,
       },
