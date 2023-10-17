@@ -70,7 +70,7 @@ O GuiaTur Tocantins é um aplicativo inovador que oferece informações completa
 
 ### Segurança e Privacidade
 
-- [ ] RNF05 - Definir Segurança dos Dados
+- [x] RNF05 - Definir Segurança dos Dados
     - Os dados dos usuários devem ser armazenados de forma segura, utilizando criptografia.
 
 - [ ] RNF06 - Definir Privacidade do Usuário
@@ -78,15 +78,15 @@ O GuiaTur Tocantins é um aplicativo inovador que oferece informações completa
 
 ### Desempenho e Confiabilidade
 
-- [ ] RNF07 - Avaliar Tempo de Resposta
+- [x] RNF07 - Avaliar Tempo de Resposta
     - O aplicativo deve responder às requisições dos usuários em no máximo 2 segundos.
 
 ### Usabilidade e Interface
 
-- [ ] RNF08 - Possuir Interface Intuitiva
+- [x] RNF08 - Possuir Interface Intuitiva
     - A interface do aplicativo deve ser intuitiva e fácil de usar, mesmo para usuários não familiarizados.
 
-- [ ] RNF09 - Possuir Design Responsivo
+- [x] RNF09 - Possuir Design Responsivo
     - O aplicativo deve ser responsivo e se adaptar a diferentes tamanhos de tela.
 
 ### Performance e Escalabilidade
