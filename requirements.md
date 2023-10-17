@@ -33,8 +33,8 @@ O GuiaTur Tocantins é um aplicativo inovador que oferece informações completa
 - [ ] RF07 - Mostrar Comentários (Em análise)
     - Como um usuário, desejo deixar comentários sobre minhas experiências.
 
-- [ ] RF08 - Mostrar Lojas de Artigos Regionais
-    - Como um turista, desejo obter informações sobre lojas que vendem produtos regionais e artesanato.
+- [x] RF08 - Comprar entrada
+    - Como um turista, desejo obter a entrada para o ponto turistico pelo aplicativo.
 
 - [ ] RF09 - Permitir Exportação de Roteiros
     - Como um usuário, desejo exportar os roteiros montados em um formato de arquivo para referência offline.
