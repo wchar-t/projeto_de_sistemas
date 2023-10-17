@@ -1,0 +1,480 @@
+import { GuiaTurApiRequest } from '@/interfaces/server/Request';
+import { GuiaTurApiResponse } from '@/interfaces/server/Response';
+import withMethod from '@/middlewares/method';
+import withSession from '@/middlewares/session';
+
+let HTML_TEMPLATE = `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .wrapper {
+        display: flex;
+        flex-direction: column;
+        width: 880px;
+        height: 430px;
+        border: 3px solid black;
+        border-top: 0;
+        border-bottom: 0;
+        font-family: Consolas;
+      }
+
+      .section {
+        display: flex;
+        height: 80px;
+        flex-shrink: 0;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .content {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        border-top: 3px dashed;
+        border-bottom: 3px dashed;
+      }
+
+      .title {
+        font-size: 22px;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 25px;
+      }
+
+      .barcode {
+        width: 220px;
+        height: 60px;
+        overflow: hidden;
+      }
+
+      line {
+        stroke: #000000;
+      }
+
+      .row {
+        display: flex;
+        gap: 15px;
+      }
+
+      .col {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .col > div > div:first-child {
+        font-weight: 600;
+      }
+
+      .col > div > div:last-child {
+        margin-bottom: 5px;
+      }
+
+      .data {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        margin-top: 35px;
+      }
+
+      .data > .row {
+        justify-content: space-evenly;
+      }
+
+      .signature {
+        margin: 0 auto;
+      }
+
+      .signature .col > div:first-child {
+        margin-top: 60px;
+        width: 350px;
+        height: 1px;
+        background-color: black;
+        border-top: 0;
+      }
+
+      .signature .col > div:last-child {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="section">{id}</div>
+      <div class="content">
+        <div class="title">{evento}</div>
+        <div class="data">
+          <div class="col">
+            <div class="col">
+              <div>Nome Cliente</div>
+              <div>{nome_cliente}</div>
+            </div>
+            <div class="col">
+              <div>Nome Entrega</div>
+              <div>{nome_cliente}</div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="col">
+              <div>CPF</div>
+              <div>{cpf}</div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="col">
+              <div>Valor</div>
+              <div>R$ {valor}</div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="col">
+              <div>Data Compra</div>
+              <div>{datetime_date}</div>
+            </div>
+            <div class="col">
+              <div>Data</div>
+              <div>{datetime_hour}</div>
+            </div>
+          </div>
+        </div>
+        <div class="signature">
+          <div class="col">
+            <div></div>
+            <div>{nome_cliente}</div>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="barcode">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xml:space="preserve"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 0 92 25"
+          >
+            <line
+              fill="none"
+              style="stroke-width: 1"
+              x1="0.5"
+              y1="0"
+              x2="0.5"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 2"
+              x1="3"
+              y1="0"
+              x2="3"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 1"
+              x1="6.5"
+              y1="0"
+              x2="6.5"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 1"
+              x1="9.5"
+              y1="0"
+              x2="9.5"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 1"
+              x1="11.5"
+              y1="0"
+              x2="11.5"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 2"
+              x1="14"
+              y1="0"
+              x2="14"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 1"
+              x1="16.5"
+              y1="0"
+              x2="16.5"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 1"
+              x1="19.5"
+              y1="0"
+              x2="19.5"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 1"
+              x1="21.5"
+              y1="0"
+              x2="21.5"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 1"
+              x1="23.5"
+              y1="0"
+              x2="23.5"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 1"
+              x1="26.5"
+              y1="0"
+              x2="26.5"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 2"
+              x1="29"
+              y1="0"
+              x2="29"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 1"
+              x1="31.5"
+              y1="0"
+              x2="31.5"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 2"
+              x1="35"
+              y1="0"
+              x2="35"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 1"
+              x1="37.5"
+              y1="0"
+              x2="37.5"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 1"
+              x1="39.5"
+              y1="0"
+              x2="39.5"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 2"
+              x1="42"
+              y1="0"
+              x2="42"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 1"
+              x1="44.5"
+              y1="0"
+              x2="44.5"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 1"
+              x1="47.5"
+              y1="0"
+              x2="47.5"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 1"
+              x1="49.5"
+              y1="0"
+              x2="49.5"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 1"
+              x1="51.5"
+              y1="0"
+              x2="51.5"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 1"
+              x1="54.5"
+              y1="0"
+              x2="54.5"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 2"
+              x1="57"
+              y1="0"
+              x2="57"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 1"
+              x1="59.5"
+              y1="0"
+              x2="59.5"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 1"
+              x1="61.5"
+              y1="0"
+              x2="61.5"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 1"
+              x1="64.5"
+              y1="0"
+              x2="64.5"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 2"
+              x1="67"
+              y1="0"
+              x2="67"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 1"
+              x1="69.5"
+              y1="0"
+              x2="69.5"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 1"
+              x1="71.5"
+              y1="0"
+              x2="71.5"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 2"
+              x1="75"
+              y1="0"
+              x2="75"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 1"
+              x1="77.5"
+              y1="0"
+              x2="77.5"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 1"
+              x1="79.5"
+              y1="0"
+              x2="79.5"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 1"
+              x1="81.5"
+              y1="0"
+              x2="81.5"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 1"
+              x1="83.5"
+              y1="0"
+              x2="83.5"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 2"
+              x1="87"
+              y1="0"
+              x2="87"
+              y2="30"
+            />
+            <line
+              fill="none"
+              style="stroke-width: 1"
+              x1="90.5"
+              y1="0"
+              x2="90.5"
+              y2="30"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+`;
+
+async function handler(req: GuiaTurApiRequest, res: GuiaTurApiResponse) {
+  // save sale, send email with PDF content
+  // here we will just return a link to the pdf
+  const { cpf, email, name, origin, price, rooms, totemId } = req.body;
+
+  HTML_TEMPLATE = HTML_TEMPLATE.replaceAll('{evento}', 'Entrada / Hospedagem');
+  HTML_TEMPLATE = HTML_TEMPLATE.replaceAll('{cpf}', cpf.toString().padStart(11, '0').replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4'));
+  HTML_TEMPLATE = HTML_TEMPLATE.replaceAll('{email}', email);
+  HTML_TEMPLATE = HTML_TEMPLATE.replaceAll('{id}', totemId);
+  HTML_TEMPLATE = HTML_TEMPLATE.replaceAll('{nome_cliente}', name.toString().toUpperCase());
+  HTML_TEMPLATE = HTML_TEMPLATE.replaceAll('{valor}', parseFloat((price / 100).toString()).toFixed(2).toString().replace('.', ','));
+  HTML_TEMPLATE = HTML_TEMPLATE.replaceAll('{datetime_date}', new Date().toLocaleDateString('br'));
+  HTML_TEMPLATE = HTML_TEMPLATE.replaceAll('{datetime_hour}', new Date().toLocaleTimeString('br'));
+
+  const formData = new FormData();
+  const blob = new Blob([HTML_TEMPLATE]);
+
+  formData.append('File', blob, 'file.html');
+
+  const response = await fetch(`https://v2.convertapi.com/convert/html/to/pdf?Secret=${process.env.CONVERT_API_KEY}&StoreFile=true`, {
+    method: 'POST',
+    body: formData,
+  }).then((e) => e.json());
+
+  return res.json({ error: false, result: { url: response.Files[0].Url } });
+}
+
+export default withSession(withMethod(handler, ['POST']));

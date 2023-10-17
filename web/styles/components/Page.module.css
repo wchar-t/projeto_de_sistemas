@@ -21,3 +21,92 @@
   justify-content: center;
   align-items: center;
 }
+
+.center-hcontent {
+  align-items: center;
+}
+
+.nav {
+  display: flex;
+  width: 100%;
+  position: fixed;
+  z-index: 999999;
+  background: #181818;
+  box-shadow: 0px 1px 5px #1f1e1e78;
+}
+
+.nav,
+.nav .menu {
+  height: 60px;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-color: var(--bg-color-topbar-primary);
+  justify-content: space-between;
+}
+
+.menu .brand,
+.menu .options {
+  width: 240px;
+}
+
+.manu .content {
+  flex: 1;
+}
+
+.menu .brand {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding-left: 10px;
+}
+
+.menu .brand > div {
+  height: 60px;
+}
+
+.menu .brand img {
+  height: 100%;
+  border-radius: 6px;
+}
+
+.options {
+  display: flex;
+  justify-content: flex-end;
+  align-content: center;
+  align-items: center;
+  padding-right: 15px;
+}
+
+.dropdown-display-username {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  padding: 5px 15px;
+  gap: 10px;
+}
+
+.avatar {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.dropdown-display-username > span {
+  text-transform: capitalize;
+}
+
+.mm {
+  display: flex;
+  height: 60px;
+  gap: 15px;
+  align-items: center;
+}
+
+.mm a {
+  color: rgb(251, 251, 251);
+}

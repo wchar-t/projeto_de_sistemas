@@ -104,7 +104,7 @@ export default function TotemRegisterModal({
             </FormControl>
 
             {images.map((e, i) => (
-              <FormControl isRequired key={e}>
+              <FormControl isRequired>
                 <FormLabel>Imagem</FormLabel>
                 <Input
                   type="text"
@@ -142,7 +142,6 @@ export default function TotemRegisterModal({
                 <FormLabel>Formato</FormLabel>
                 <Select
                   isRequired
-                  defaultValue="entrada"
                   value={priceFormat}
                   onChange={(e) => setPriceFormat(e.target.value)}
                 >

@@ -27,6 +27,7 @@ model Totem {
   description String
   lastActive  DateTime?
   createdAt   DateTime  @default(now())
+  sales       Sale[]
 }
 
 model Spots {
@@ -42,4 +43,42 @@ model Spots {
   coords      Float[]
   icon        String
   createdAt   DateTime @default(now())
+  rooms       Rooms[]
+}
+
+model Rooms {
+  id              String          @id @default(auto()) @map("_id") @db.ObjectId
+  spotId          String          @map("_spotId") @db.ObjectId
+  spot            Spots           @relation(fields: [spotId], references: [id])
+  name            String
+  total           Int
+  price           Int
+  occupiedHistory RoomsOccupied[]
+}
+
+model RoomsOccupied {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  roomId     String   @map("_roomId") @db.ObjectId
+  room       Rooms    @relation(fields: [roomId], references: [id])
+  saleId     String   @map("_saleId") @db.ObjectId
+  sale       Sale     @relation(fields: [saleId], references: [id])
+  reservedAt DateTime
+  createdAt  DateTime @default(now())
+}
+
+model Sale {
+  id        String          @id @default(auto()) @map("_id") @db.ObjectId
+  totemId   String          @map("_totemId") @db.ObjectId
+  totem     Totem           @relation(fields: [totemId], references: [id])
+  name      String
+  cpf       BigInt
+  email     String
+  price     Int
+  rooms     RoomsOccupied[]
+  createdAt DateTime        @default(now())
+}
+
+model FakeSaleLock {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  seed String @unique
 }

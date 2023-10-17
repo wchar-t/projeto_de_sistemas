@@ -2,6 +2,8 @@ import Session from '@/interfaces/shared/Session';
 import LoginRegisterSuccess from '@/interfaces/client/LoginRegisterSuccess';
 import Totem from '@/interfaces/client/Totem';
 import Location from '@/interfaces/client/Location';
+import Room from '@/interfaces/client/Room';
+import RoomOccupied from '@/interfaces/client/RoomOccupied';
 
 /* eslint-disable no-undef */
 export interface SuccessfulResponse<Data extends Record<string, any>> {
@@ -97,6 +99,22 @@ export default class Api {
     return this.session;
   }
 
+  static getTotemSession(): Session | null {
+    const token = window.localStorage.getItem('totemToken');
+
+    if (!token) {
+      return null;
+    }
+
+    try {
+      const session = JSON.parse(atob(token.split('.')[1]));
+
+      return session;
+    } catch (e) {
+      return null;
+    }
+  }
+
   static async getMe(): Promise<RequestResponse<{
     session: Session,
     jwt: string,
@@ -145,7 +163,64 @@ export default class Api {
     });
   }
 
-  static async getLocations(): Promise<RequestResponse<Location[]>> {
-    return request<Location[]>('/api/locations');
+  static async getLocations(user?: string): Promise<RequestResponse<Location[]>> {
+    return request<Location[]>(user ? `/api/locations?user=${user}` : '/api/locations');
+  }
+
+  static async getRooms(location: string): Promise<RequestResponse<Room[]>> {
+    return request<Room[]>(`/api/location/${location}/rooms`);
+  }
+
+  static async getOccupiedRooms(
+    start: EpochTimeStamp,
+    end: EpochTimeStamp,
+    location: string,
+  ): Promise<RequestResponse<RoomOccupied[]>> {
+    return request<RoomOccupied[]>(`/api/location/${location}/occupied?start=${start}&end=${end}`);
+  }
+
+  static async saveRoom(location: string, name: string, price: number, total: number, room = ''): Promise<RequestResponse<{ status: string }>> {
+    return request<{ status: string }>(`/api/location/${location}/rooms/new`, {
+      location,
+      name,
+      price,
+      total,
+      room,
+    });
+  }
+
+  static async getPix(seed: string): Promise<RequestResponse<{ status: string }>> {
+    return request<{status: string }>(`/api/pix/${seed}`);
+  }
+
+  static async saveSale(
+    origin: string,
+    totemId: string,
+    seed: string,
+    name: string,
+    cpf: number,
+    email: string,
+    price: number,
+    rooms: {
+      qt: number,
+      room: Room,
+    }[],
+  ): Promise<RequestResponse<{ url: string }>> {
+    return request<{ url: string }>('/api/sales/new', {
+      origin,
+      totemId,
+      seed,
+      name,
+      cpf,
+      email,
+      price,
+      rooms,
+    });
+  }
+
+  static logout() {
+    window.localStorage.removeItem('token');
+    window.localStorage.removeItem('totemToken');
+    this.session = null;
   }
 }
